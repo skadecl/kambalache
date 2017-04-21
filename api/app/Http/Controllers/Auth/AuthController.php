@@ -5,60 +5,40 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use JWTAuth;
+use Tymon\JWTAuthExceptions\JWTException;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Hash;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
 
-    use AuthenticatesAndRegistersUsers;
+  use AuthenticatesAndRegistersUsers;
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'getLogout']);
+  public function sign_in(Request $request)
+  {
+    $credentials = $request->only('email', 'password');
+
+      try {
+          // verify the credentials and create a token for the user
+          if (! $token = JWTAuth::attempt($credentials)) {
+              return response()->json(['error' => 'invalid_credentials'], 401);
+          }
+      } catch (JWTException $e) {
+          // something went wrong
+          return response()->json(['error' => 'could_not_create_token'], 500);
+      }
+      // if no errors are encountered we can return a JWT
+      return response()->json(compact('token'));
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function sign_up(Request $request)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+      $data = $request->all();
+      $data['password'] = Hash::make($data['password']);
+      User::create($data);
+      return ['created' => true];
     }
 }
