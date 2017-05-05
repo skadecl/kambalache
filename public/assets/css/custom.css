@@ -1,0 +1,42 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body {
+
+}
+
+.bot-border-round {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.main-search-input {
+	height: 50px;
+	font-size: 20px;
+	border: solid 3px;
+	border-radius: 3px;
+	border-color: gray;
+}
+
+.item-container {
+	text-align: center;
+}
+
+.item-portrait {
+	width: 206px;
+	height: 180px;
+	padding: 5px;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+.item-portrait img {
+	max-width: 100%;
+	max-height: 100%;
+	border-radius: 3px;
+	display: block;
+	margin: auto;
+}
