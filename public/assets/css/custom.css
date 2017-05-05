@@ -8,6 +8,10 @@ body {
 
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 .bot-border-round {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -19,6 +23,26 @@ body {
 	border: solid 3px;
 	border-radius: 3px;
 	border-color: gray;
+}
+
+.login-input {
+	height: 40px;
+	font-size: 15px;
+	border: solid 1px;
+	border-radius: 3px;
+	border-color: green;
+}
+
+.login-loader {
+	width: 40px;
+}
+
+.loader-hidden {
+	visibility: hidden;
+}
+
+.loader-visible {
+	visibility: visible;
 }
 
 .item-container {

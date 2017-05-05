@@ -4,43 +4,45 @@ angular.module('app.services')
 
   var self = this;
 
-  self.data = {};
+  self.token = ''
+  self.user = {}
 
   self.save = function() {
-    if (self.data) {
-      $window.localStorage['sessData'] = $window.btoa(JSON.stringify(self.data));
+    if (self.user) {
+      $window.localStorage['userData'] = $window.btoa(JSON.stringify(self.user))
     }
   };
 
   self.restore = function() {
-    var lsData = $window.localStorage['sessData'];
-    if (lsData) {
-      self.data = JSON.parse($window.atob(lsData));
+    var lsData = $window.localStorage['userData'];
+    var lsToken = $window.localStorage['token'];
+    if (lsData && lsToken) {
+      self.user = JSON.parse($window.atob(lsData));
+      self.token = appAuth.getToken()
       // appNotify.enable();
     }
   };
 
-  self.logIn = function(user_rut, pass) {
+  self.logIn = function(user_email, user_password) {
     // TODO: update models and login
     // TODO: handle errors
 
-    return $http.post(API + '/auth', {
-      rut: user_rut,
-      password: pass
+    return $http.post(API + '/auth/sign_in', {
+      email: user_email,
+      password: user_password
     }).then(function(res){
-      self.data.active = true;
-      self.data.token = appAuth.parseToken(appAuth.getToken());
-      self.data = res.data.userData;
-      self.save();
+      self.user = res.data.userData
+      self.save()
       // appNotify.enable();
     });
   };
 
   self.logOut = function() {
-    $location.path('/home');
+    $location.path('/');
     appAuth.removeToken();
-    self.data = {};
-    self.save();
+    self.token = ''
+    self.user = {}
+    self.save()
     // appNotify.disable();
     // TODO: Handle better
   };
@@ -67,14 +69,9 @@ angular.module('app.services')
   };
 
   self.updateUserData = function(userdata){
-    self.data.user = userdata;
+    self.user = userdata;
     self.save();
   }
-
-  $rootScope.$on('newToken', function(event, token) {
-    self.data.user = appAuth.parseToken(token);
-    self.save();
-  });
 
   //--- INIT SESSION
   self.restore();

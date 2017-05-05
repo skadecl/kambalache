@@ -11,16 +11,16 @@ angular.module('app.services')
     },
 
     saveToken: function(token) {
-      $window.localStorage['sessionToken'] = token;
+      $window.localStorage['token'] = token;
       //$rootScope.$broadcast('newToken', self.parseToken(token));
     },
 
     getToken: function() {
-      return $window.localStorage['sessionToken'];
+      return $window.localStorage['token'];
     },
 
     removeToken: function() {
-      $window.localStorage.removeItem('sessionToken');
+      $window.localStorage.removeItem('token');
     }
   }
 });

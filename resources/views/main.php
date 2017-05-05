@@ -10,7 +10,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title>Cambalache</title>
+	<title>Kambalache</title>
 
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -110,10 +110,8 @@
 				</ul>
 
 
-				<!-- notifications and other links -->
-				<ul class="nav navbar-right pull-right">
-
-				</li>
+				<!-- Logged In View -->
+				<ul class="nav navbar-right pull-right" ng-show="session.isAuthed()">
 
 				<li class="dropdown">
 
@@ -230,7 +228,15 @@
 						<li class="sep"></li>
 
 						<li>
-							<a href="#">
+							<a>
+							<i class="entypo-user"></i>{{session.user.first_name + ' ' + session.user.last_name}}
+							</a>
+						</li>
+
+						<li class="sep"></li>
+
+						<li>
+							<a class="pointer" ng-click="session.logOut()">
 								Salir <i class="entypo-logout right"></i>
 							</a>
 						</li>
@@ -248,6 +254,23 @@
 
 						</li>
 
+					</ul>
+
+					<!-- Logged Out View -->
+					<ul class="nav navbar-right pull-right" ng-hide="session.isAuthed()">
+						<li>
+							<a class="pointer" ng-click="session.logOut()" data-toggle="modal" data-target=".login-modal">
+								<i class="entypo-login"></i>Ingresar
+							</a>
+						</li>
+
+						<li class="sep"></li>
+
+						<li>
+							<a class="pointer" ng-click="session.logOut()">
+								Crear Cuenta<i class="entypo-user-add right"></i>
+							</a>
+						</li>
 					</ul>
 
 				</div>
@@ -271,7 +294,38 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
+
+			<!-- logIn modal -->
+			<div class="modal fade login-modal" role="dialog" tabindex="-1" style="display: none;">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Ingresar a Kambalache</h4>
+						</div>
+						<div class="modal-body">
+							<span class="text-danger col-md-offset-3" ng-show="loginError">Correo/Clave Invalidos!</span>
+							<br>
+							<div>
+								 <input type="text" class="form-control login-input" placeholder="Correo Electrónico" ng-model="loginEmail" required>
+								 <br>
+								  <input type="password" class="form-control login-input" placeholder="Contraseña" ng-model="loginPassword" required>
+							 </div>
+							 <br>
+							 <object class="col-md-offset-5 login-loader" ng-class="!loginLoading ? 'loader-hidden' : 'loader-visible'" type="image/svg+xml" data="assets/images/loader.svg"></object>
+							 <br>
+							 <br>
+							 <span class="col-md-offset-3">¿Olvidaste tu contraseña?</span>
+							 <br>
+						 </div>
+						 <div class="modal-footer">
+							 <button type="button" class="btn btn-success" ng-click="doLogin()" ng-disabled="loginLoading">Ingresar</button>
+							 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+						 </div>
+					 </div>
+				 </div>
+			 </div>
 
 			<!-- Bottom scripts (common) -->
 			<script src="assets/js/gsap/TweenMax.min.js"></script>
