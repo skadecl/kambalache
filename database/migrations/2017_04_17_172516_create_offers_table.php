@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -17,7 +18,7 @@ class CreateOffersTable extends Migration
           $table->integer('offeror_item_id');
           $table->integer('owner_item_id');
           $table->longText('comment');
-          $table->string('status');
+          $table->integer('status');
           $table->timestamps();
       });
     }
@@ -29,6 +30,6 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('offers');
+        Schema::dropIfExists('offers');
     }
 }

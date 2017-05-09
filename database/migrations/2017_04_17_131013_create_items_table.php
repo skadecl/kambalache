@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -20,7 +21,7 @@ class CreateItemsTable extends Migration
           $table->string('description');
           $table->string('brand');
           $table->boolean('new');
-          $table->string('status');
+          $table->integer('status');
           $table->timestamps();
       });
     }
@@ -32,6 +33,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-      Schema::drop('items');
+      Schema::dropIfExists('items');
     }
 }

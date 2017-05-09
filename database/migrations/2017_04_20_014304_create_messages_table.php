@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -17,6 +18,7 @@ class CreateMessagesTable extends Migration
           $table->integer('offer_id');
           $table->integer('sender_id');
           $table->longText('content');
+          $table->integer('status');
           $table->timestamps();
       });
     }
@@ -28,6 +30,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('messages');
+        Schema::dropIfExists('messages');
     }
 }

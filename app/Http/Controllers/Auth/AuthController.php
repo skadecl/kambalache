@@ -9,13 +9,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+// use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 use Hash;
 
 class AuthController extends Controller
 {
 
-  use AuthenticatesAndRegistersUsers;
+  use AuthenticatesUsers;
 
   public function sign_in(Request $request)
   {
