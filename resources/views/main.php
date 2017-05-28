@@ -21,9 +21,23 @@
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
 	<link rel="stylesheet" href="assets/css/skins/yellow.css">
+	<link rel="stylesheet" href="assets/css/form-wizard.css">
+	<link rel="stylesheet" href="assets/css/isteven-multi-select.css">
+	<link rel="stylesheet" href="assets/css/dropzone.css">
+
+
+
+
+
 
 	<script src="assets/js/angular/angular.min.js"></script>
 	<script src="assets/js/angular/angular-route.min.js"></script>
+	<script src="assets/js/angular/angular-img-crop.min.js"></script>
+	<script src="assets/js/angular/angular-messages.min.js"></script>
+
+
+
+	<script src="assets/js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
 	<script src="assets/js/app/app.js"></script>
 	<script src="assets/js/app/app.controllers.js"></script>
@@ -36,8 +50,17 @@
 	<script src="assets/js/app/services/notifications_service.js"></script>
 
 	<script src="assets/js/app/controllers/main_controller.js"></script>
+	<script src="assets/js/app/controllers/search_controller.js"></script>
+	<script src="assets/js/app/controllers/my_items_controller.js"></script>
+	<script src="assets/js/app/controllers/new_item_controller.js"></script>
+	<script src="assets/js/app/controllers/items_controller.js"></script>
+
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<script src="assets/js/angular/isteven-multi-select.js"></script>
+
+
+
 
 	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -70,19 +93,19 @@
 
 				<ul class="navbar-nav">
 					<li>
-						<a href="#">
+						<a href="#/">
 							<i class="entypo-search"></i>
 							<span class="title">Busca</span>
 						</a>
 					</li>
 					<li class="has-sub">
-						<a href="#">
+						<a class="pointer">
 							<i class="entypo-infinity"></i>
 							<span class="title">Intercambia</span>
 						</a>
 						<ul>
 							<li>
-								<a href="#">
+								<a href="#/me/items">
 									<i class="entypo-box"></i>
 									<span class="title">Mis Productos</span>
 								</a>
@@ -322,12 +345,15 @@
 						 <div class="modal-footer">
 							 <button type="button" class="btn btn-success" ng-click="doLogin()" ng-disabled="loginLoading">Ingresar</button>
 							 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+
 						 </div>
 					 </div>
 				 </div>
 			 </div>
 
 			<!-- Bottom scripts (common) -->
+			<!-- <script src="assets/js/jquery.bootstrap.wizard.min.js"></script>
+			<script src="assets/js/jquery.validate.min.js"></script> -->
 			<script src="assets/js/gsap/TweenMax.min.js"></script>
 			<script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
 			<script src="assets/js/bootstrap.js"></script>
@@ -342,6 +368,7 @@
 
 			<!-- JavaScripts initializations and stuff -->
 			<script src="assets/js/neon-custom.js"></script>
+
 
 
 			<!-- Demo Settings -->

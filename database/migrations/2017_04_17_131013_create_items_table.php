@@ -17,11 +17,17 @@ class CreateItemsTable extends Migration
           $table->increments('id');
           $table->integer('user_id');
           $table->integer('category_id');
-          $table->string('name');
-          $table->string('description');
-          $table->string('brand');
-          $table->boolean('new');
-          $table->integer('status');
+          $table->string('name')->default("");
+          $table->string('description')->default("");
+          $table->boolean('new')->default(true);
+          $table->integer('use_time')->default(0);
+          $table->integer('use_type')->default(0);
+          $table->integer('settings_new')->default(0);
+          $table->integer('settings_use_time')->default(0);
+          $table->integer('settings_use_type')->default(0);
+          $table->integer('views')->default(0);
+          $table->integer('interested')->default(0);
+          $table->integer('status')->default(0);
           $table->timestamps();
       });
     }

@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 // use App\Http\Requests;
 // use App\Http\Controllers\Controller;
 use App\Item;
-// use JWTAuth;
-// use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Storage;
+use App\Photo;
 
 class ItemController extends Controller
 {
@@ -18,13 +20,10 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
-        $items->load('user');
-        // TODO: GET FIRST PHOTO ONLY (NOT WORKING)
-        $items->load('photos')->first();
-        return $items;
+        $user_id = JWTAuth::getPayload($request->token)->get('sub');
+        return Item::where('user_id', $user_id)->get()->load('photos');
     }
 
     /**
@@ -32,10 +31,23 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-      Item::create($request->all());
-      return ['created' => true];
+      $user_id = JWTAuth::getPayload($request->token)->get('sub');
+      $new_item_data = $request->all();
+      $new_item_data['user_id'] = $user_id;
+      $item = Item::create($new_item_data);
+      foreach ($request->photos as $key => $photo) {
+        $base64_str = substr($photo, strpos($photo, ",")+1);
+        $image = base64_decode($base64_str);
+        $name = $item->id."-".$key.time().".jpg";
+        Storage::put('public/items/'.$name, $image);
+        $photo = new Photo;
+        $photo->item_id = $item->id;
+        $photo->content = $name;
+        $photo->save();
+      }
+      return ['created' => true, 'item' => $item->load('photos')];
     }
 
     /**
@@ -58,7 +70,10 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        return Item::find($id)->load('photos', 'user');
+        $item = Item::find($id)->load('photos', 'user');
+        $item->views = $item->views + 1;
+        $item->save();
+        return $item;
     }
 
     /**
@@ -108,5 +123,10 @@ class ItemController extends Controller
       $offers = Item::find($id)->offers;
       $offers->load('offeror_item', 'offeror_item.photos', 'offeror_item.user');
       return $offers;
+    }
+
+    public function open_search(Request $request)
+    {
+      return Item::search($request->search)->get();
     }
 }

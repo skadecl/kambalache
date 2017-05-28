@@ -180,6 +180,9 @@ return [
         //JWT AUTH
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
+        //Scout
+        Laravel\Scout\ScoutServiceProvider::class,
+
     ],
 
     /*

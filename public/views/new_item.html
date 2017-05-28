@@ -1,0 +1,402 @@
+<div class="row">
+  <!-- Header -->
+  <!-- <div class="row">
+  <div class="col-md-12">
+  <h3>Nuevo Producto</h3>
+</div>
+</div> -->
+
+<!-- New product form -->
+<!-- Header -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="container">
+      <div class="row">
+        <section>
+          <div class="wizard">
+            <div class="wizard-inner">
+              <div class="connecting-line"></div>
+              <ul class="nav nav-tabs" role="tablist">
+
+                <li ng-class="{'active': step == 1}" ng-click="setStep(1)">
+                  <a class="pointer" uib-tooltip="Información">
+                    <span class="round-tab">
+                      <i class="glyphicon glyphicon-paperclip"></i>
+                    </span>
+                  </a>
+                </li>
+
+                <li ng-class="{'active': step == 2}" ng-click="setStep(2)">
+                  <a class="pointer" uib-tooltip="Imágenes">
+                    <span class="round-tab">
+                      <i class="glyphicon glyphicon-picture"></i>
+                    </span>
+                  </a>
+                </li>
+                <li ng-class="{'active': step == 3}" ng-click="setStep(3)">
+                  <a class="pointer" uib-tooltip="Opciones de Intercambio">
+                    <span class="round-tab">
+                      <i class="glyphicon glyphicon-cog"></i>
+                    </span>
+                  </a>
+                </li>
+
+                <li ng-class="{'active': step == 4}" ng-click="setStep(4)">
+                  <a class="pointer" uib-tooltip="Resumen">
+                    <span class="round-tab">
+                      <i class="glyphicon glyphicon-ok"></i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Form body -->
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- Step 1 content -->
+    <div class="step-content" ng-show="step == 1">
+      <!-- Category field -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <h3>Información general</h3>
+            <br>
+            <label class="control-label">¿A qué categoría pertenece tu producto?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+              <div class="col-md-6 col-centered">
+                <select ng-model="newItem.category_id" class="form-control">
+                  <option value="none" selected>Selecciona una categoría</option>
+                  <option ng-disabled="cat.parent == 0" ng-repeat="cat in session.app.categories track by $index" value="{{cat.id}}">{{cat.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name field -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <br>
+            <label class="control-label">Escoge un nombre para tu publicación</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+              <div class="col-md-6 col-centered">
+                <input ng-model="newItem.name" type="text" class="form-control" placeholder="Ej: Zapatillas de running talla 43">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New/Used field -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <br>
+            <label class="control-label">¿Es nuevo o usado?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+              <div class="col-md-2 col-centered">
+                <select ng-model="newItem.new" class="form-control">
+                  <option value="1" selected>Nuevo</option>
+                  <option value="0">Usado</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Use time field -->
+      <div class="row" ng-hide="newItem.new == 1">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <br>
+            <label class="control-label">¿Cuánto tiempo de uso tiene?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-5 text-center">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><input ng-model="newItem.use_time" type="text" value="1" class="form-control"></label>
+
+              <div class="col-sm-4">
+                <select ng-model="newItem.use_type" class="form-control">
+                  <option value="1" selected>Semana(s)</option>
+                  <option value="2">Mes(es)</option>
+                  <option value="3">Año(s)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description field -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <br>
+            <label class="control-label">Escribe una descripción para tu producto</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+              <div class="col-md-8 col-centered">
+                <div class="chat-textarea">
+                  <textarea ng-model="newItem.description" class="form-control autogrow" rows="5" placeholder="Recuerda incluir información importante como daños, detalles, etc. Tambien es útil incluir información sobre lo que te interesa recibir a cambio por este producto."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Step 2 content -->
+    <div class="step-content" ng-show="step == 2">
+      <div class="row">
+        <div class="col-md-12 col-centered text-center">
+          <h3>Imágenes</h3>
+          <p>Agregar buenas fotos es la mejor forma de atraer intercambios. Intenta usar fotos de alta calidad y no usar imágenes de referencia.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone">
+              <span>
+                <div class="dz-preview dz-error dz-image-preview" ng-repeat="photo in newItem.photos track by $index">
+                  <div class="dz-details">
+                    <div class="dz-size" data-dz-size="">
+                      <strong>0.0</strong> KB
+                    </div>
+                    <img data-dz-thumbnail="" src="{{photo}}">
+                  </div>
+                  <div class="dz-error-mark pointer" uib-tooltip="Descartar" ng-click="deleteImage($index)">
+                    <span>✘</span>
+                  </div>
+                </div>
+                <button ng-show="newItem.photos.length < 6" type="button" ng-click="triggerUpload()" uib-tooltip="Agregar Imagen" class="btn btn-warning btn-circle btn-lg fix-button-top"><i class="glyphicon glyphicon-plus"></i></button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row hidden">
+        <input type="file" id="fileInput"/>
+      </div>
+    </div>
+
+    <!-- Step 3 content -->
+    <div class="step-content" ng-show="step == 3">
+      <div class="row">
+        <div class="col-md-6 col-centered text-center">
+          <h3>Preferencias de Intercambio</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-centered text-center">
+          <br>
+          <br>
+          <label class="control-label">Selecciona las categorías que te interesan <i class="entypo-help-circled" uib-tooltip="Esta opción te permite elegir que tipo de productos quieres recibir a cambio. Los demás usuarios solo podran ofrecerte objetos que pertenezcan a estas categorías."></i></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-centered text-center" isteven-multi-select input-model="session.app.categories" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="icon name" item-label="icon name maker" tick-property="ticked">
+        </div>
+      </div>
+
+      <!-- New/Used field -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <br>
+            <label class="control-label">¿Buscas algo Nuevo o Usado?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+              <div class="col-md-2 col-centered">
+                <select ng-model="newItem.settings_new" class="form-control">
+                  <option value="0" selected>Ambos</option>
+                  <option value="1">Nuevo</option>
+                  <option value="2">Usado</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Use time field -->
+      <div class="row" ng-hide="newItem.settings_new == 1">
+        <div class="row">
+          <div class="col-md-4 col-centered text-center">
+            <label class="control-label">Elige el tiempo máximo de uso</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-5 text-center">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><input ng-model="newItem.settings_use_time" type="text" value="1" class="form-control"></label>
+
+              <div class="col-sm-4">
+                <select ng-model="newItem.settings_use_type" class="form-control">
+                  <option value="1">Semana(s)</option>
+                  <option value="2">Mes(es)</option>
+                  <option value="3" selected>Año(s)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 content -->
+    <div class="step-content" ng-show="step == 4">
+      <div class="row">
+        <div class="col-md-6 col-centered text-center">
+          <h3>Resumen</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="text-center">
+          <h2>{{newItem.name}}</h2>
+          <p>0 <i uib-tooltip="Visitas" class="entypo-eye"></i> | 0 <i uib-tooltip="Interesados" class="entypo-target"></i></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h4>Imágenes</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone text-center">
+              <span>
+                <div class="dz-preview dz-image-preview" ng-repeat="photo in newItem.photos track by $index">
+                  <div class="dz-details">
+                    <img data-dz-thumbnail="" src="{{photo}}">
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h4>Descripción</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone">
+              {{newItem.description}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h4>Intercambio</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone">
+              Preferencias de intercambio
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-12">
+      <br>
+      <br>
+      <ul class="list-inline pull-left">
+        <li><button ng-click="prevStep()" ng-hide="step == 1" type="button" class="btn btn-blue btn-icon icon-left">Anterior<i class="entypo-left"></i></button></li>
+      </ul>
+      <ul class="list-inline pull-right">
+        <li><button ng-click="nextStep()" ng-hide="step == 4" type="button" class="btn btn-green btn-icon">Siguiente<i class="entypo-right"></i></button></li>
+        <li><button ng-click="createItem()" ng-hide="step < 4" type="button" class="btn btn-gold btn-icon">Guardar<i class="entypo-check"></i></button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Image cropping modal -->
+<div class="modal fade bs-example-modal-lg" id="cropperModal" role="dialog" tabindex="-1" style="display: none;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Edición de imagen</h4>
+      </div>
+      <div class="modal-body">
+        <div class="cropArea text-center">
+          <img-crop image="myImage" result-image="myCroppedImage" area-type="square"></img-crop>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="saveImage()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" role="dialog" id="saveItemModal" tabindex="-1" style="display: none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="col-centered text-center">
+          <h3>Espera un segundo</h3>
+          <h4>Estamos guardando tu producto</h4>
+          <br>
+          <object class="login-loader" ng-class="!itemSaving ? 'loader-hidden' : 'loader-visible'" type="image/svg+xml" data="assets/images/loader.svg"></object>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

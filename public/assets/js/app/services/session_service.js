@@ -1,26 +1,31 @@
 angular.module('app.services')
 
-.service('appSession', function($window, $http, API, appAuth, $rootScope, $location) {
+.service('appSession', function($window, $http, API, appAuth, $rootScope, $location, $timeout) {
 
   var self = this;
 
   self.token = ''
   self.user = {}
+  self.app = {}
 
   self.save = function() {
     if (self.user) {
       $window.localStorage['userData'] = $window.btoa(JSON.stringify(self.user))
+      $window.localStorage['appData'] = $window.btoa(JSON.stringify(self.app))
     }
   };
 
   self.restore = function() {
-    var lsData = $window.localStorage['userData'];
+    var lsUserData = $window.localStorage['userData'];
+    var lsAppData = $window.localStorage['appData'];
     var lsToken = $window.localStorage['token'];
-    if (lsData && lsToken) {
-      self.user = JSON.parse($window.atob(lsData));
+    if (lsUserData && lsAppData && lsToken) {
+      self.user = JSON.parse($window.atob(lsUserData));
+      self.app =JSON.parse($window.atob(lsAppData));
       self.token = appAuth.getToken()
       // appNotify.enable();
     }
+    self.loadAppData()
   };
 
   self.logIn = function(user_email, user_password) {
@@ -32,7 +37,7 @@ angular.module('app.services')
       password: user_password
     }).then(function(res){
       self.user = res.data.userData
-      self.save()
+      self.loadAppData()
       // appNotify.enable();
     });
   };
@@ -68,10 +73,49 @@ angular.module('app.services')
     }
   };
 
-  self.updateUserData = function(userdata){
-    self.user = userdata;
-    self.save();
+  self.formatCategories = function (categories){
+    var parents = categories.filter(function (elem) {return elem.parent == 0})
+    var ordered = []
+    for (var p = 0 ; p < parents.length ; p++) {
+      //parents[p].name = '<b>' + parents[p].name + '</b>'
+      ordered.push(parents[p])
+      var children = categories.filter(function (elem) {return elem.parent == parents[p].id})
+      for (var c = 0 ; c < children.length ; c++) {
+        children[c].name = '. . . .  ' + children[c].name
+        ordered.push(children[c])
+      }
+    }
+    return ordered
   }
+
+  self.loadAppData = function(){
+    $timeout(function(){
+      //Load Categories
+      $http.get(API + '/categories')
+      .then(function (res){
+        self.app.categories = self.formatCategories(res.data)
+        self.save()
+      }, function (){
+        //TODO: Handle Error
+      })
+      .finally(function (){
+        //Load user items if logged in
+        if (self.isAuthed()){
+          $http.get(API + '/items')
+          .then(function (res) {
+            self.user.items = res.data
+            self.save()
+          }, function () {
+            //TODO: Handle error
+          })
+          .finally(function (){
+            self.save()
+          })
+        }
+      })
+    }, 100)
+  }
+
 
   //--- INIT SESSION
   self.restore();

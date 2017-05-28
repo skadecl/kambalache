@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="text-center">
+    <h2>{{item.name}}</h2>
+    <p>{{item.views}} <i uib-tooltip="Visitas" class="entypo-eye"></i> | {{item.interested}} <i uib-tooltip="Interesados" class="entypo-target"></i></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h4>Imágenes</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="">
+      <div class="dropzone text-center">
+        <span>
+          <div class="dz-preview dz-image-preview" ng-repeat="photo in item.photos track by $index">
+            <div class="dz-details">
+              <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}">
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h4>Descripción</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="">
+      <div class="dropzone">
+        {{item.description}}
+      </div>
+    </div>
+  </div>
+</div>

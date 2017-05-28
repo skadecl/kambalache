@@ -1,0 +1,98 @@
+<div class="row">
+  <!-- Nav tabs -->
+  <div class="row">
+    <div class="">
+      <ul class="nav nav-tabs">
+        <li class="normal-tab pointer" ng-click="tab = 'normal'" ng-class="{'active': tab == 'normal'}"><a>Búsqueda Normal</a></li>
+        <li class="advanced-tab pointer" ng-click="tab = 'advanced'" ng-class="{'active': tab == 'advanced'}"><a>Búsqueda Avanzada</a></li>
+        <li class="advanced-tab pointer" ng-click="tab = 'featured'" ng-class="{'active': tab == 'featured'}"><a>Recomendados</a></li>
+        <li class="results-tab pointer hidden" ng-click="tab = 'results'" ng-class="{'active': tab == 'results'}"><a>Resultados</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Normal search content -->
+  <div class="row" ng-show="tab == 'normal'">
+    <br>
+    <div class="col-md-6 col-md-offset-3">
+
+      <div class="col-md-3 col-md-offset-3 logo-opacity">
+        <img src="assets/images/kambalache-logo.png" width="200">
+      </div>
+
+      <div class="col-md-12">
+        <br>
+        <h4>En <i class="entypo-infinity"></i>Kambalache puedes intercambiar lo que desees, solo debes tener algo para ofrecer a cambio. ¡Suerte!</h4>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <br>
+          <br>
+          <input type="text" class="form-control main-search-input" ng-model="searchInput" placeholder="Busca algo de tu interés">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-3 col-md-offset-3">
+          <br>
+          <button type="button" class="btn btn-default btn-lg" ng-click="triggerSearch()">Comienza a Intercambiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced search content -->
+  <div class="row" ng-show="tab == 'advanced'">
+    <h4>En construcción</h4>
+  </div>
+
+  <!-- Featured search content -->
+  <div class="row" ng-show="tab == 'featured'">
+    <h4>En construcción</h4>
+  </div>
+
+  <!-- Results search content -->
+  <div class="row" ng-show="tab == 'results'">
+    <!-- Results header -->
+    <div class="row">
+      <div class="col-md-11 col-md-offset-1">
+        <h4>Lo que encontramos para ti</h4>
+      </div>
+      <div class="col-md-12">
+        <hr />
+      </div>
+    </div>
+
+    <!-- Search loader -->
+    <div class="row">
+      <div class="col-md-1 col-centered" ng-show="!resultsReady">
+        <object class="search-loader" type="image/svg+xml" data="assets/images/loader.svg"></object>
+      </div>
+    </div>
+
+    <div class="row results-content" ng-show="resultsReady">
+      <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+
+
+          <div class="col-md-3" ng-repeat="item in searchResult track by $index">
+            <div class="tile-title" ng-random-class="colors">
+              <div class="item-container">
+                <div class="col-md-1 col-centered item-portrait">
+                  <img src="assets/images/demo-shoes.jpg" height="100%">
+                </div>
+              </div>
+
+              <div class="title">
+                <h3></h3>
+                <p>{{item.name}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

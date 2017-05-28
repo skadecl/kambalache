@@ -21,17 +21,22 @@ use Illuminate\Http\Request;
 Route::post('auth/sign_in', 'Auth\AuthController@sign_in');
 Route::post('auth/sign_up', 'Auth\AuthController@sign_up');
 
+//Token-required
 Route::group(['middleware' => 'jwt.auth'], function () {
   //User
   Route::resource('users', 'UserController', ['except' => ['edit']]);
   Route::get('users/{id}/items', 'UserController@items');
 
-  //Cateogry
-  Route::resource('categories', 'CategoryController', ['except' => ['edit']]);
-  Route::get('categories/{id}/items', 'CategoryController@items');
 
   //Item
-  Route::resource('items', 'ItemController', ['except' => ['edit']]);
-  Route::get('items/{id}/photos', 'ItemController@photos');
+  Route::get('items', 'ItemController@index');
+  Route::post('items', 'ItemController@create');
+  Route::get('items/{id}', 'ItemController@show');
   Route::get('items/{id}/offers', 'ItemController@offers');
+
+  //Search
+  Route::get('search/items/normal', 'ItemController@open_search');
 });
+
+//Token Free
+Route::get('categories', 'CategoryController@index');

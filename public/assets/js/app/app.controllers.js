@@ -1,1 +1,1 @@
-angular.module('app.controllers', []);
+angular.module('app.controllers', ['ui.bootstrap', 'isteven-multi-select', 'ngImgCrop', 'ngMessages']);

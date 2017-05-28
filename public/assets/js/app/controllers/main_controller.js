@@ -18,7 +18,6 @@ angular.module('app.controllers')
       $('.login-modal').modal('hide')
       $scope.loginEmail = ''
       $scope.loginPassword = ''
-
     }, function (res) {
       // Login fail
       $scope.loginLoading = false
@@ -26,4 +25,6 @@ angular.module('app.controllers')
     })
 
   }
+
+  //Init
 });
