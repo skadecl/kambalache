@@ -95,7 +95,7 @@ angular.module('app.controllers')
       })
       .finally(function (res){
         $('#saveItemModal').modal('hide')
-        history.pushState({}, null, '/#/me/products');
+        history.pushState({}, null, '/#/me/items');
       })
     }, 200);
   }
