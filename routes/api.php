@@ -33,6 +33,12 @@ Route::group(['middleware' => 'jwt.auth'], function () {
   Route::post('items', 'ItemController@create');
   Route::get('items/{id}', 'ItemController@show');
   Route::get('items/{id}/offers', 'ItemController@offers');
+  Route::get('items/{id}/questions', 'ItemController@questions');
+
+  //questions
+  Route::post('questions', 'QuestionController@create');
+  Route::patch('questions/{id}', 'QuestionController@update');
+
 
   //Search
   Route::get('search/items/normal', 'ItemController@open_search');

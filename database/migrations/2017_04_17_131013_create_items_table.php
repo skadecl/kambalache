@@ -28,6 +28,7 @@ class CreateItemsTable extends Migration
           $table->integer('views')->default(0);
           $table->integer('interested')->default(0);
           $table->integer('status')->default(0);
+          $table->string('avatar')->default("");
           $table->timestamps();
       });
     }

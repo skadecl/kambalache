@@ -10,7 +10,7 @@ class Item extends Model
 
   protected $table = 'items';
 
-  protected $fillable = ['user_id', 'category_id', 'name', 'description', 'new', 'use_time', 'use_type', 'settings_new', 'settings_use_time', 'settings_use_type', 'views', 'interested', 'status'];
+  protected $fillable = ['user_id', 'category_id', 'name', 'description', 'new', 'use_time', 'use_type', 'settings_new', 'settings_use_time', 'settings_use_type', 'views', 'interested', 'status', 'avatar'];
 
   public function user()
   {
@@ -35,5 +35,10 @@ class Item extends Model
   public function searchableAs()
   {
     return 'items_index';
+  }
+
+  public function questions()
+  {
+    return $this->hasMany('App\Question');
   }
 }

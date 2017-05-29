@@ -77,18 +77,20 @@
 
 
           <div class="col-md-3" ng-repeat="item in searchResult track by $index">
-            <div class="tile-title" ng-random-class="colors">
-              <div class="item-container">
-                <div class="col-md-1 col-centered item-portrait">
-                  <img src="assets/images/demo-shoes.jpg" height="100%">
+            <a href="#/items/{{item.id}}">
+              <div class="tile-title" ng-random-class="colors" class="pointer">
+                <div class="item-container">
+                  <div class="col-md-1 col-centered item-portrait">
+                    <img src="{{'/storage/items/' + item.avatar}}" height="100%">
+                  </div>
+                </div>
+
+                <div class="title">
+                  <h3></h3>
+                  <p>{{item.name}}</p>
                 </div>
               </div>
-
-              <div class="title">
-                <h3></h3>
-                <p>{{item.name}}</p>
-              </div>
-            </div>
+            </a>
           </div>
 
         </div>

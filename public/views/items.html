@@ -37,8 +37,102 @@
   <div class="col-md-10 col-md-offset-1">
     <div class="">
       <div class="dropzone">
-        {{item.description}}
+        <h4>{{item.description}}</h4>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <br>
+  <br>
+  <div class="col-md-10 col-md-offset-1">
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <div class="panel-title">
+          <h4>
+            Preguntas al dueño
+          </h4>
+        </div>
+      </div>
+
+      <div class="panel-body no-padding">
+
+        <!-- List of Comments -->
+        <ul class="comments-list">
+
+          <!-- Comment Entry -->
+          <li ng-repeat="question in questions | orderBy:'-' track by $index">
+
+            <div class="comment-details">
+
+              <div class="comment-head">
+                <a>{{question.question}}</a>
+              </div>
+
+              <p class="comment-text" ng-show="question.status == 1">
+                {{question.answer}}
+              </p>
+
+              <p class="comment-text" ng-show="question.status == 0">
+                - No respondida -
+              </p>
+
+              <div class="comment-footer">
+
+                <div class="action-links" ng-show="question.status == 0 && session.user.id == item.user.id && !answerbox[$index]">
+
+                  <a class="approve pointer" ng-click="triggerAnswer($index)">
+                    <i class="entypo-reply"></i>
+                    Responder
+                  </a>
+
+                </div>
+
+                <div class="row" ng-if="question.status == 0" ng-show="answerbox[$index]">
+                  <div class="col-md-10 col-md-offset-1">
+                    <textarea ng-model="answer.answer" class="form-control autogrow" placeholder="Escribe una respuesta..." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+
+                    <div class="form-options">
+
+                      <div class="post-submit">
+                        <br>
+                        <button type="button" id="answerQuestionButton" class="btn btn-primary" ng-click="answerQuestion(question.id)">Responder</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row" ng-if="session.user.id != item.user.id">
+  <div class="col-md-10 col-md-offset-1">
+    <textarea ng-model="new_question.question" class="form-control autogrow" placeholder="Escribe una pregunta..." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+
+    <div class="form-options">
+
+      <div class="post-submit">
+        <br>
+        <button type="button" id="sendQuestionButton" class="btn btn-primary" ng-click="sendQuestion()">Preguntar</button>
+      </div>
+
     </div>
   </div>
 </div>

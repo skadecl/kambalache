@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Question;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 // use App\Http\Requests;
 // use App\Http\Controllers\Controller;
 
-class MessageController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,9 +26,11 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+      $request['user_id'] = JWTAuth::getPayload($request->token)->get('sub');
+      $question = Question::create($request->all());
+      return ['created' => true, 'question' => $question];
     }
 
     /**
@@ -71,7 +75,9 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $question = Question::find($id);
+      $question->update($request->all());
+      return ['updated' => true];
     }
 
     /**

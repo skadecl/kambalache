@@ -46,6 +46,10 @@ class ItemController extends Controller
         $photo->item_id = $item->id;
         $photo->content = $name;
         $photo->save();
+        if ($key == 0) {
+          $item->avatar = $name;
+          $item->save();
+        }
       }
       return ['created' => true, 'item' => $item->load('photos')];
     }
@@ -128,5 +132,10 @@ class ItemController extends Controller
     public function open_search(Request $request)
     {
       return Item::search($request->search)->get();
+    }
+
+    public function questions($id)
+    {
+      return Item::find($id)->questions;
     }
 }
