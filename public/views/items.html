@@ -10,7 +10,7 @@
     <h4>Imágenes</h4>
   </div>
 
-  <div ng-hide="item.user.id == session.user.id" class="col-md-5 text-right">
+  <div ng-show="!isOwn" class="col-md-5 text-right">
     <button ng-click="interestsMe()" ng-disabled="isInterested" id="interestButton" type="button" class="btn btn-blue btn-icon icon-left">
       <span ng-if="isInterested" id="interestButtonText">En tu lista</span>
       <span ng-if="!isInterested" id="interestButtonText">Me Interesa</span>

@@ -99,7 +99,7 @@
 							<span class="title">Busca</span>
 						</a>
 					</li>
-					<li class="has-sub">
+					<li class="has-sub" >
 						<a class="pointer">
 							<i class="entypo-infinity"></i>
 							<span class="title">Intercambia</span>

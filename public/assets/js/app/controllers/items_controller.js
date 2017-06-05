@@ -15,6 +15,7 @@ angular.module('app.controllers')
   }
 
   $scope.isInterested = false
+  $scope.isOwn = true
 
   $scope.answerQuestion = function (question_id){
     $('#answerQuestionButton').addClass('disabled')
@@ -77,6 +78,14 @@ angular.module('app.controllers')
       $scope.isInterested = true
   }
 
+  var checkOwn = function () {
+    var index = $scope.session.user.items.findIndex(function (x){return x.id == $routeParams.item_id})
+    if (index >= 0)
+      $scope.isOwn = true
+    else
+      $scope.isOwn = false
+  }
+
   var getQuestions = function (){
     $http.get(API + '/items/' + $routeParams.item_id + '/questions')
     .then(function (res){
@@ -100,6 +109,7 @@ angular.module('app.controllers')
   //INIT
   getItem()
   checkInterest()
+  checkOwn()
 
   //Init
 });
