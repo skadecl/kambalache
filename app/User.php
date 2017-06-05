@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
       return $this->hasMany('App\Item');
     }
+
+    public function interests()
+    {
+      return $this->hasMany('App\Interest');
+    }
 }

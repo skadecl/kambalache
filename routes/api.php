@@ -26,6 +26,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
   //User
   Route::resource('users', 'UserController', ['except' => ['edit']]);
   Route::get('users/{id}/items', 'UserController@items');
+  Route::get('users/{id}/interests', 'UserController@interests');
 
 
   //Item
@@ -34,6 +35,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
   Route::get('items/{id}', 'ItemController@show');
   Route::get('items/{id}/offers', 'ItemController@offers');
   Route::get('items/{id}/questions', 'ItemController@questions');
+  Route::get('items/{id}/interested', 'ItemController@interested');
+
 
   //questions
   Route::post('questions', 'QuestionController@create');

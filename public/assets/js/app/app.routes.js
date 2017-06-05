@@ -6,6 +6,10 @@ angular.module('app.routes', ['ngRoute'])
       templateUrl: '/views/search.html',
       controller: 'SearchCtrl'
     })
+    .when('/me/interests', {
+      templateUrl: '/views/interests.html',
+      controller: 'InterestsCtrl'
+    })
     .when('/me/items', {
       templateUrl: '/views/my_items.html',
       controller: 'MyItemsCtrl'

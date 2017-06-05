@@ -961,7 +961,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 $scope.lang.selectNone      = $sce.trustAsHtml( $scope.icon.selectNone + '&nbsp;&nbsp;Ninguna' );
                 $scope.lang.reset           = $sce.trustAsHtml( $scope.icon.reset      + '&nbsp;&nbsp;Limpiar' );
                 $scope.lang.search          = 'Buscar...';
-                $scope.lang.nothingSelected = 'Selecciona una categoría';
+                $scope.lang.nothingSelected = 'Selecciona';
             }
             $scope.icon.tickMark = $sce.trustAsHtml( $scope.icon.tickMark );
 

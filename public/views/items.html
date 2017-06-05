@@ -11,8 +11,11 @@
   </div>
 
   <div class="col-md-5 text-right">
-    <button type="button" class="btn btn-blue btn-icon icon-left">Me Interesa<i class="entypo-target"></i></button>
-    <button type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
+    <button ng-click="interestsMe()" ng-disabled="isInterested" id="interestButton" type="button" class="btn btn-blue btn-icon icon-left">
+      <span ng-if="isInterested" id="interestButtonText">En tu lista</span>
+      <span ng-if="!isInterested" id="interestButtonText">Me Interesa</span>
+      <i class="entypo-target"></i></button>
+    <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
   </div>
 </div>
 
@@ -138,6 +141,28 @@
         <button type="button" id="sendQuestionButton" class="btn btn-primary" ng-click="sendQuestion()">Preguntar</button>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<!-- Item selector modal -->
+<div class="modal fade" role="dialog" id="itemSelectModal" tabindex="-1" style="display: none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Elige productos para ofertar</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="name" item-label="icon name id" tick-property="ticked">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="saveImage()">Guardar</button>
+      </div>
     </div>
   </div>
 </div>

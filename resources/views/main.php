@@ -54,6 +54,7 @@
 	<script src="assets/js/app/controllers/my_items_controller.js"></script>
 	<script src="assets/js/app/controllers/new_item_controller.js"></script>
 	<script src="assets/js/app/controllers/items_controller.js"></script>
+	<script src="assets/js/app/controllers/interests_controller.js"></script>
 
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
@@ -116,13 +117,13 @@
 									<span class="title">Mis Ofertas</span>
 								</a>
 							</li>
+							<li>
+								<a href="#/me/interests">
+									<i class="entypo-target"></i>
+									<span class="title">Me Interesan</span>
+								</a>
+							</li>
 						</ul>
-					</li>
-					<li>
-						<a href="#">
-							<i class="entypo-user"></i>
-							<span class="title">Mi Perfil</span>
-						</a>
 					</li>
 					<li>
 						<a href="#">

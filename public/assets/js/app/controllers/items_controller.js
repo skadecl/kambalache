@@ -14,6 +14,8 @@ angular.module('app.controllers')
     status: 1
   }
 
+  $scope.isInterested = false
+
   $scope.answerQuestion = function (question_id){
     $('#answerQuestionButton').addClass('disabled')
     $('#answerQuestionButton').html('Enviando...')
@@ -54,6 +56,27 @@ angular.module('app.controllers')
     $scope.answerbox[question_index] = true
   }
 
+  $scope.interestsMe = function () {
+    $('#interestButton').attr('disabled', true);
+    $('#interestButtonText').html('Cargando...');
+    $http.get(API + '/items/' + $scope.item.id + '/interested')
+    .then(function (res){
+      $('#interestButtonText').html('Ya está en tu lista');
+    }, function (res){
+      //TODO: Handle error
+    })
+  }
+
+  $scope.triggerOffer = function () {
+    $('#itemSelectModal').modal('show')
+  }
+
+  var checkInterest = function () {
+    var index = $scope.session.user.interests.findIndex(function (x){return x.id == $routeParams.item_id})
+    if (index >= 0)
+      $scope.isInterested = true
+  }
+
   var getQuestions = function (){
     $http.get(API + '/items/' + $routeParams.item_id + '/questions')
     .then(function (res){
@@ -76,6 +99,7 @@ angular.module('app.controllers')
 
   //INIT
   getItem()
+  checkInterest()
 
   //Init
 });

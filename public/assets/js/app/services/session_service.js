@@ -6,26 +6,42 @@ angular.module('app.services')
 
   self.token = ''
   self.user = {}
-  self.app = {}
+  self.app = {
+    updated_at: 0,
+    complete: true
+  }
 
   self.save = function() {
+    self.complete = true
     if (self.user) {
       $window.localStorage['userData'] = $window.btoa(JSON.stringify(self.user))
+    }
+    if (self.app){
       $window.localStorage['appData'] = $window.btoa(JSON.stringify(self.app))
     }
   };
 
   self.restore = function() {
+    console.log('Pre-Load AppData');
+    console.log(self);
     var lsUserData = $window.localStorage['userData'];
     var lsAppData = $window.localStorage['appData'];
     var lsToken = $window.localStorage['token'];
     if (lsUserData && lsAppData && lsToken) {
       self.user = JSON.parse($window.atob(lsUserData));
-      self.app =JSON.parse($window.atob(lsAppData));
+      self.app = JSON.parse($window.atob(lsAppData));
       self.token = appAuth.getToken()
-      // appNotify.enable();
     }
-    self.loadAppData()
+
+    var now = Date.now
+    if (!self.app.complete) {
+      self.loadAppData()
+    }
+    else {
+      $timeout(function () {
+        self.loadAppData()
+      }, 1);
+    }
   };
 
   self.logIn = function(user_email, user_password) {
@@ -93,6 +109,7 @@ angular.module('app.services')
       //Load Categories
       $http.get(API + '/categories')
       .then(function (res){
+        console.log('Downloading APPData: Categories');
         self.app.categories = self.formatCategories(res.data)
         self.save()
       }, function (){
@@ -105,11 +122,23 @@ angular.module('app.services')
           .then(function (res) {
             self.user.items = res.data
             self.save()
+            console.log('Downloading APPData: Items');
           }, function () {
             //TODO: Handle error
           })
           .finally(function (){
-            self.save()
+            //Load user's interests
+            $http.get(API + '/users/' + self.user.id + '/interests')
+            .then(function (res) {
+              console.log('Downloading APPData: Interests');
+              self.user.interests = res.data
+              self.save()
+            }, function () {
+              //TODO: Handle error
+            })
+            .finally(function (){
+
+            })
           })
         }
       })

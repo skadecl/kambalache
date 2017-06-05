@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 // use App\Http\Requests;
 // use App\Http\Controllers\Controller;
 use App\User;
+use App\Interest;
+use DB;
+
 
 class UserController extends Controller
 {
@@ -63,5 +66,14 @@ class UserController extends Controller
     public function items($id)
     {
       return User::find($id)->items;
+    }
+
+    //GET INTERESTS
+    public function interests($id)
+    {
+      return DB::table('interests')
+                ->join('items', 'interests.item_id', '=', 'items.id')
+                ->where('interests.user_id', $id)
+                ->get();
     }
 }

@@ -11,6 +11,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Storage;
 use App\Photo;
+use App\Interest;
 
 class ItemController extends Controller
 {
@@ -137,5 +138,22 @@ class ItemController extends Controller
     public function questions($id)
     {
       return Item::find($id)->questions;
+    }
+
+    public function interested(Request $request, $id)
+    {
+      $user_id = JWTAuth::getPayload($request->token)->get('sub');
+
+      $item = Item::find($id);
+      $item->interested = $item->interested + 1;
+
+      $interest = new Interest;
+      $interest->user_id = $user_id;
+      $interest->item_id = $item->id;
+
+      $item->save();
+      $interest->save();
+
+      return ['created' => true];
     }
 }
