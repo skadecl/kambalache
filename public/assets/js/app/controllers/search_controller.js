@@ -16,6 +16,15 @@ angular.module('app.controllers')
     do_search()
   }
 
+  $scope.viewItem = function (item_id) {
+    if ($scope.session.user.access) {
+      location.href = '/#/items/' + item_id;
+    }
+    else {
+      $('#notLoggedModal').modal('show');
+    }
+  }
+
   var do_search = function () {
     $timeout(function () {
       $http.get(API + '/search/items/normal', {

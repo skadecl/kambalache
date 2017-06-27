@@ -42,10 +42,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
   Route::post('questions', 'QuestionController@create');
   Route::patch('questions/{id}', 'QuestionController@update');
 
-
-  //Search
-  Route::get('search/items/normal', 'ItemController@open_search');
 });
 
+//Search
+Route::get('search/items/normal', 'ItemController@open_search');
 //Token Free
 Route::get('categories', 'CategoryController@index');

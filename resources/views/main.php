@@ -10,7 +10,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title>Kambalache</title>
+	<title>Cambax</title>
 
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -99,7 +99,7 @@
 							<span class="title">Busca</span>
 						</a>
 					</li>
-					<li class="has-sub" >
+					<li class="has-sub" ng-show="session.user.access">
 						<a class="pointer">
 							<i class="entypo-infinity"></i>
 							<span class="title">Intercambia</span>
@@ -125,7 +125,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li ng-show="session.user.access">
 						<a href="#">
 							<i class="entypo-help"></i>
 							<span class="title">Ayuda</span>
@@ -312,7 +312,7 @@
 							</div>
 							<footer class="main">
 
-								&copy; 2017 <strong>Kambalache</strong>
+								&copy; 2017 <strong>Cambax</strong>
 
 							</footer>
 						</div>
@@ -326,7 +326,7 @@
 				<div class="modal-dialog modal-sm" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">Ingresar a Kambalache</h4>
+							<h4 class="modal-title">Ingresar a Cambax</h4>
 						</div>
 						<div class="modal-body">
 							<span class="text-danger col-md-offset-3" ng-show="loginError">Correo/Clave Invalidos!</span>
@@ -350,6 +350,26 @@
 						 </div>
 					 </div>
 				 </div>
+			 </div>
+
+			 <!-- Not logged in Modal -->
+			 <div class="modal fade" role="dialog" id="notLoggedModal" tabindex="-1" style="display: none;">
+			   <div class="modal-dialog" role="document">
+			     <div class="modal-content">
+						 <div class="modal-header">
+							 <h4 class="modal-title">Ups!</h4>
+						 </div>
+			       <div class="modal-body">
+			         <div class="col-centered text-center">
+			           <h4>Debes iniciar sesión para ver información de un producto</h4>
+			           <br>
+			         </div>
+			       </div>
+						 <div class="modal-footer">
+							 <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						 </div>
+			     </div>
+			   </div>
 			 </div>
 
 			<!-- Bottom scripts (common) -->
