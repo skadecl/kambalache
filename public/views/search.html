@@ -3,10 +3,10 @@
   <div class="row">
     <div class="">
       <ul class="nav nav-tabs">
-        <li class="normal-tab pointer" ng-click="tab = 'normal'" ng-class="{'active': tab == 'normal'}"><a>Búsqueda Normal</a></li>
-        <li class="advanced-tab pointer" ng-click="tab = 'advanced'" ng-class="{'active': tab == 'advanced'}"><a>Búsqueda Avanzada</a></li>
-        <li class="advanced-tab pointer" ng-click="tab = 'featured'" ng-class="{'active': tab == 'featured'}"><a>Recomendados</a></li>
-        <li class="results-tab pointer hidden" ng-click="tab = 'results'" ng-class="{'active': tab == 'results'}"><a>Resultados</a></li>
+        <li class="normal-tab pointer" ng-click="selectTab('normal')" ng-class="{'active': tab == 'normal'}"><a class="text-info">Búsqueda</a></li>
+        <li class="advanced-tab pointer" ng-click="selectTab('featured')" ng-class="{'active': tab == 'featured'}"><a class="text-danger">Recomendados</a></li>
+        <li class="results-tab hidden pointer" ng-click="selectTab('results')" ng-class="{'active': tab == 'results'}"><a class="text-success">Resultados</a></li>
+        <li class="pointer" ng-repeat="itemViewTab in selectedResults track by $index"><a class="result-tab-view-{{$index}}" ng-click="viewItem(itemViewTab)">{{trimName(itemViewTab.name)}} <span class="text-right pointer" ng-click="closeTab($index)"> &times;</span></a></li>
       </ul>
     </div>
   </div>
@@ -77,7 +77,7 @@
 
 
           <div class="col-md-3" ng-repeat="item in searchResult track by $index">
-            <a ng-click="viewItem(item.id)">
+            <a ng-click="viewItem(item)">
               <div class="tile-title" ng-random-class="colors" class="pointer">
                 <div class="item-container">
                   <div class="col-md-1 col-centered item-portrait">
@@ -94,6 +94,200 @@
           </div>
 
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-repeat="itemViewContent in selectedResults track by $index">
+    <div class="row" ng-show="resultView == $index">
+      <div class="row">
+        <div class="text-center">
+          <h2>{{itemViewContent.name}}</h2>
+          <p>{{itemViewContent.views}} <i uib-tooltip="Visitas" class="entypo-eye"></i> | {{itemViewContent.interested}} <i uib-tooltip="Interesados" class="entypo-target"></i></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+          <h4>Imágenes</h4>
+        </div>
+
+        <div ng-show="!itemViewContent.isOwn" class="col-md-5 text-right">
+          <button ng-click="interestsMe($index)" ng-disabled="isInterested" id="{{$index}}-interestButton" type="button" class="btn btn-blue btn-icon icon-left">
+            <span ng-if="itemViewContent.isInterested" id="{{$index}}-interestButtonText">En tu lista</span>
+            <span ng-if="!itemViewContent.isInterested" id="{{$index}}-interestButtonText">Me Interesa</span>
+            <i class="entypo-target"></i></button>
+          <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
+        </div>
+        <div ng-show="itemViewContent.isOwn" class="col-md-5 text-right">
+          <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone text-center">
+              <span>
+                <div class="dz-preview dz-image-preview" ng-repeat="photo in itemViewContent.full_data.photos track by $index">
+                  <div class="dz-details">
+                    <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}">
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h4>Descripción</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="">
+            <div class="dropzone">
+              <h4>{{itemViewContent.description}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <br>
+        <br>
+        <div class="col-md-10 col-md-offset-1">
+
+          <div class="panel panel-primary">
+
+            <div class="panel-heading">
+              <div class="panel-title">
+                <h4>
+                  Preguntas al dueño
+                </h4>
+              </div>
+            </div>
+
+            <div class="panel-body no-padding">
+
+              <!-- List of Comments -->
+              <ul class="comments-list">
+
+                <!-- Comment Entry -->
+                <li ng-repeat="question in itemViewContent.questions | orderBy:'-' track by $index">
+
+                  <div class="comment-details">
+
+                    <div class="comment-head">
+                      <a>{{question.question}}</a>
+                    </div>
+
+                    <p class="comment-text" ng-show="question.status == 1">
+                      {{question.answer}}
+                    </p>
+
+                    <p class="comment-text" ng-show="question.status == 0">
+                      - No respondida -
+                    </p>
+
+                    <div class="comment-footer">
+
+                      <div class="action-links" ng-show="question.status == 0 && session.user.id == itemViewContent.full_data.user.id && !itemViewContent.answerbox[$index]">
+
+                        <a class="approve pointer" ng-click="triggerAnswer($index)">
+                          <i class="entypo-reply"></i>
+                          Responder
+                        </a>
+
+                      </div>
+
+                      <div class="row" ng-if="question.status == 0" ng-show="itemViewContent.answerbox[$index]">
+                        <div class="col-md-10 col-md-offset-1">
+                          <textarea ng-model="answer.answer" class="form-control autogrow" id="{{$parent.$index}}-answerTextArea" placeholder="Escribe una respuesta..." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+
+                          <div class="form-options">
+
+                            <div class="post-submit">
+                              <br>
+                              <button type="button" id="{{$parent.$index}}-answerQuestionButton" class="btn btn-primary" ng-click="answerQuestion(question.id)">Responder</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row" ng-if="session.user.id != itemViewContent.full_data.user.id">
+        <div class="col-md-10 col-md-offset-1">
+          <textarea ng-model="new_question.question" id="{{$parent.$index}}-questionTextArea" class="form-control autogrow" placeholder="Escribe una pregunta..." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+
+          <div class="form-options">
+
+            <div class="post-submit">
+              <br>
+              <button type="button" id="{{$parent.$index}}-sendQuestionButton" class="btn btn-primary" ng-click="sendQuestion($parent.$index)">Preguntar</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Offer modal -->
+<div class="modal fade" role="dialog" id="itemSelectModal" tabindex="-1" style="display: none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Nueva oferta</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 col-centered text-center">
+            <h4>Agrega objetos a tu oferta</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="avatar name" item-label="avatar name" tick-property="ticked">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-centered text-center">
+          <hr />
+            <h4>Escribe un mensaje para el dueño</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8 col-md-offset-2">
+									<textarea class="form-control autogrow" placeholder="Describe tu oferta" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
+					</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="sendOffer()">Enviar Oferta</button>
       </div>
     </div>
   </div>

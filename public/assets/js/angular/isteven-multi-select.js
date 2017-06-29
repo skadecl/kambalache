@@ -583,7 +583,11 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
 
                 angular.forEach( temp, function( value, key ) {
                     item[ value ] && ( label += '&nbsp;' + value.split( '.' ).reduce( function( prev, current ) {
-                        return prev[ current ];
+                      //Hardcode fix for avatars
+                        if (current == 'avatar')
+                          return '<img src="/storage/items/' + prev[current] + '" >';
+                        else
+                          return prev[ current ];
                     }, item ));
                 });
 

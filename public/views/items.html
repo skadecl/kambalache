@@ -17,6 +17,9 @@
       <i class="entypo-target"></i></button>
     <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
   </div>
+  <div ng-show="isOwn" class="col-md-5 text-right">
+    <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
+  </div>
 </div>
 
 <div class="row">
@@ -153,15 +156,33 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title">Elige productos para ofertar</h4>
+        <h4 class="modal-title">Nueva oferta</h4>
       </div>
       <div class="modal-body">
-        <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="name" item-label="icon name id" tick-property="ticked">
+        <div class="row">
+          <div class="col-md-6 col-centered text-center">
+            <h4>Agrega objetos a tu oferta</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="avatar name" item-label="avatar name" tick-property="ticked">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-centered text-center">
+          <hr />
+            <h4>Escribe un mensaje para el dueño</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8 col-md-offset-2">
+									<textarea class="form-control autogrow" placeholder="Describe tu oferta" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
+					</div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" ng-click="saveImage()">Guardar</button>
+        <button type="button" class="btn btn-primary" ng-click="sendOffer()">Enviar Oferta</button>
       </div>
     </div>
   </div>
