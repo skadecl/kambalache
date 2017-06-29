@@ -52,9 +52,11 @@
 	<script src="assets/js/app/controllers/main_controller.js"></script>
 	<script src="assets/js/app/controllers/search_controller.js"></script>
 	<script src="assets/js/app/controllers/my_items_controller.js"></script>
+	<script src="assets/js/app/controllers/my_offers_controller.js"></script>
 	<script src="assets/js/app/controllers/new_item_controller.js"></script>
 	<script src="assets/js/app/controllers/items_controller.js"></script>
 	<script src="assets/js/app/controllers/interests_controller.js"></script>
+	<script src="assets/js/app/controllers/offers_controller.js"></script>
 
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
@@ -112,7 +114,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a href="#/me/offers">
 									<i class="entypo-clipboard"></i>
 									<span class="title">Mis Ofertas</span>
 								</a>

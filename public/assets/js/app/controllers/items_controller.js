@@ -17,6 +17,17 @@ angular.module('app.controllers')
   $scope.isInterested = false
   $scope.isOwn = true
 
+  $scope.selectedPhoto = 0
+
+  $scope.nextPhoto = function(){
+    $scope.selectedPhoto = ($scope.selectedPhoto+1) % $scope.item.photos.length
+  }
+
+  $scope.showPhoto = function(photo_index){
+    $scope.selectedPhoto = photo_index
+    $('#photoShowerModal').modal('show')
+  }
+
   $scope.answerQuestion = function (question_id){
     $('#answerQuestionButton').addClass('disabled')
     $('#answerQuestionButton').html('Enviando...')

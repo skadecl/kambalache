@@ -113,14 +113,14 @@
         </div>
 
         <div ng-show="!itemViewContent.isOwn" class="col-md-5 text-right">
-          <button ng-click="interestsMe($index)" ng-disabled="isInterested" id="{{$index}}-interestButton" type="button" class="btn btn-blue btn-icon icon-left">
+          <button ng-click="interestsMe($index)" ng-disabled="itemViewContent.isInterested" id="{{$index}}-interestButton" type="button" class="btn btn-blue btn-icon icon-left">
             <span ng-if="itemViewContent.isInterested" id="{{$index}}-interestButtonText">En tu lista</span>
             <span ng-if="!itemViewContent.isInterested" id="{{$index}}-interestButtonText">Me Interesa</span>
             <i class="entypo-target"></i></button>
           <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
         </div>
         <div ng-show="itemViewContent.isOwn" class="col-md-5 text-right">
-          <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
+          <button type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
         </div>
       </div>
 
@@ -131,7 +131,7 @@
               <span>
                 <div class="dz-preview dz-image-preview" ng-repeat="photo in itemViewContent.full_data.photos track by $index">
                   <div class="dz-details">
-                    <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}">
+                    <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}" ng-click="showPhoto($index)">
                   </div>
                 </div>
               </span>
@@ -270,7 +270,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="newItem.settings_categories" on-item-click="catclick( data )" button-label="avatar name" item-label="avatar name" tick-property="ticked">
+          <div class="col-md-8 col-centered text-center" isteven-multi-select input-model="session.user.items" output-model="offerItems" button-label="avatar name" item-label="avatar name" tick-property="ticked">
           </div>
         </div>
         <div class="row">
@@ -281,13 +281,28 @@
         </div>
         <div class="row">
           <div class="col-sm-8 col-md-offset-2">
-									<textarea class="form-control autogrow" placeholder="Describe tu oferta" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
+									<textarea class="form-control autogrow" ng-model="offerComment" placeholder="Describe tu oferta" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
 					</div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" ng-click="sendOffer()">Enviar Oferta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Photos shower modal -->
+<div class="modal fade" role="dialog" id="photoShowerModal" tabindex="-1" style="display: none;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8 col-centered text-center">
+            <img src="{{'/storage/items/' + selectedResults[resultView].full_data.photos[selectedPhoto].content}}" ng-click="nextPhoto()">
+          </div>
+        </div>
       </div>
     </div>
   </div>

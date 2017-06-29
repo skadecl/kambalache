@@ -126,7 +126,7 @@ class ItemController extends Controller
     public function offers($id)
     {
       $offers = Item::find($id)->offers;
-      $offers->load('offeror_item', 'offeror_item.photos', 'offeror_item.user');
+      $offers->load('owner_item', 'items_offer');
       return $offers;
     }
 
@@ -156,4 +156,5 @@ class ItemController extends Controller
 
       return ['created' => true];
     }
+
 }

@@ -137,7 +137,18 @@ angular.module('app.services')
               //TODO: Handle error
             })
             .finally(function (){
+              $http.get(API + '/offers')
+              .then(function (res) {
+                console.log('Downloading APPData: Offers');
+                self.user.offers = res.data
+                console.log(self.user);
+                self.save()
+              }, function () {
+                //TODO: Handle error
+              })
+              .finally(function (){
 
+              })
             })
           })
         }

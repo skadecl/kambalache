@@ -38,6 +38,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
   Route::get('items/{id}/interested', 'ItemController@interested');
 
 
+  //offers
+  Route::post('offers', 'OfferController@store');
+  Route::get('offers', 'OfferController@index');
+  Route::get('offers/{id}', 'OfferController@show');
+  Route::get('offers/{id}/items', 'OfferController@items');
+
+
+
   //questions
   Route::post('questions', 'QuestionController@create');
   Route::patch('questions/{id}', 'QuestionController@update');

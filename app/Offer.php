@@ -8,15 +8,20 @@ class Offer extends Model
 {
   protected $table = 'offers';
 
-  protected $fillable = ['offeror_item_id', 'owner_item_id', 'comment'];
+  protected $fillable = ['offeror_id', 'owner_item_id', 'comment', 'status'];
 
-  public function offeror_item()
+  public function offeror()
   {
-    return $this->belongsTo('App\Item', 'offeror_item_id');
+    return $this->hasOne('App\User', 'offeror_id');
   }
 
   public function owner_item()
   {
     return $this->belongsTo('App\Item', 'owner_item_id');
+  }
+
+  public function items_offer()
+  {
+    return $this->hasMany('App\ItemOffer');
   }
 }

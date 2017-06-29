@@ -10,6 +10,10 @@ angular.module('app.routes', ['ngRoute'])
       templateUrl: '/views/interests.html',
       controller: 'InterestsCtrl'
     })
+    .when('/me/offers', {
+      templateUrl: '/views/my_offers.html',
+      controller: 'MyOffersCtrl'
+    })
     .when('/me/items', {
       templateUrl: '/views/my_items.html',
       controller: 'MyItemsCtrl'
@@ -21,6 +25,10 @@ angular.module('app.routes', ['ngRoute'])
     .when('/items/:item_id', {
       templateUrl: '/views/items.html',
       controller: 'ViewItemCtrl'
+    })
+    .when('/offers/:offer_id', {
+      templateUrl: '/views/offers.html',
+      controller: 'OffersCtrl'
     })
     .otherwise({
       redirectTo: '/404'

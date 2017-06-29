@@ -10,6 +10,7 @@ angular.module('app.controllers')
   $scope.colors = ['tile-black', 'tile-primary', 'tile-blue', 'tile-red']
   $scope.selectedResults = []
   $scope.resultView = -1
+  $scope.selectedPhoto = 0
   $scope.new_question = {
 
     question: "",
@@ -20,6 +21,15 @@ angular.module('app.controllers')
   $scope.answer = {
     answer: "",
     status: 1
+  }
+
+  $scope.nextPhoto = function(){
+    $scope.selectedPhoto = ($scope.selectedPhoto + 1) % $scope.selectedResults[$scope.resultView].full_data.photos.length
+  }
+
+  $scope.showPhoto = function(photo_index){
+    $scope.selectedPhoto = photo_index
+    $('#photoShowerModal').modal('show')
   }
 
   $scope.triggerSearch = function () {
@@ -160,6 +170,28 @@ angular.module('app.controllers')
 
   $scope.triggerOffer = function () {
     $('#itemSelectModal').modal('show')
+  }
+
+  $scope.sendOffer = function() {
+    var new_offer = {
+      items: [],
+      owner_item_id: $scope.selectedResults[$scope.resultView].id,
+      comment: $scope.offerComment,
+      status: 0
+    }
+
+    $scope.offerItems.forEach(function(element){
+      new_offer.items.push(element.id);
+    })
+
+    $http.post(API + '/offers', new_offer)
+    .then(function(res){
+      $('#itemSelectModal').modal('hide');
+      location.href = '#/me/offers'
+    }, function (res){
+      // TODO: Handle error
+      console.log(res);
+    })
   }
 
   var checkInterest = function (item_index) {

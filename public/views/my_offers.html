@@ -1,0 +1,38 @@
+<div class="row">
+  <!-- Header -->
+  <div class="row">
+    <div class="col-md-12">
+      <h3><i class="entypo-box"></i>Mis Ofertas</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <br>
+    <div class="col-md-10 col-md-offset-1">
+
+      <table class="table responsive table-hover">
+        <thead>
+          <tr>
+            <th><i class="entypo-picture"> Objeto</th>
+            <th><i class="entypo-tag"> Nombre</th>
+            <th><i class="entypo-info"> Estado</th>
+            <th><i class="entypo-cog"> Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="offer in session.user.offers | orderBy:'-' track by $index">
+            <td ng-click="viewOffer(offer.id)" class="pointer"><img src="{{'/storage/items/' + offer.owner_item.avatar}}" width="60px"></td>
+            <td ng-click="viewOffer(offer.id)" class="pointer">{{offer.owner_item.name}}</td>
+            <td ng-click="viewOffer(offer.id)" class="pointer" ng-class="{'text-danger': offer.status == 1, 'text-info': offer.status == 0}">{{parseStatus(offer.status)}}</td>
+            <td ng-click="viewOffer(offer.id)" class="pointer">
+              <span uib-tooltip="Eliminar"><button type="button" class="btn btn-danger"><i class="entypo-trash"></i></button></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr />
+    </div>
+  </div>
+</div>

@@ -18,7 +18,7 @@
     <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ofertar<i class="entypo-infinity"></i></button>
   </div>
   <div ng-show="isOwn" class="col-md-5 text-right">
-    <button ng-click="triggerOffer()" type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
+    <button type="button" class="btn btn-green btn-icon icon-left">Ver Ofertas<i class="entypo-infinity"></i></button>
   </div>
 </div>
 
@@ -29,7 +29,7 @@
         <span>
           <div class="dz-preview dz-image-preview" ng-repeat="photo in item.photos track by $index">
             <div class="dz-details">
-              <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}">
+              <img data-dz-thumbnail="" src="{{'/storage/items/' + photo.content}}" ng-click="showPhoto($index)">
             </div>
           </div>
         </span>
@@ -183,6 +183,22 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" ng-click="sendOffer()">Enviar Oferta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Photos shower modal -->
+<div class="modal fade" role="dialog" id="photoShowerModal" tabindex="-1" style="display: none;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8 col-centered text-center">
+            <img src="{{'/storage/items/' + item.photos[selectedPhoto].content}}" ng-click="nextPhoto()">
+          </div>
+        </div>
       </div>
     </div>
   </div>
